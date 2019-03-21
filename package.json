@@ -1,0 +1,6 @@
+{
+  "name": "smsapi-counter",
+  "version": "1.0.0",
+  "main": "smsapi-counter.min.js",
+  "repository": "https://github.com/smsapi/smsapi-counter.git"
+}
