@@ -1,4 +1,4 @@
-var CVSMSCounter = (function() {
+var CVSMSCounter = (function () {
 
     var dataCvSmsTextarea = '[data-cv-sms-textarea]',
         dataCvSmsCounter = '[data-cv-sms-counter]',
@@ -18,33 +18,30 @@ var CVSMSCounter = (function() {
     }
 
     function activate(smsTextarea, smsCounter) {
-
-        if(smsTextarea === undefined || smsCounter === undefined) {
+        if (smsTextarea === undefined || smsCounter === undefined) {
             throw new Error('CVSMSCounter needs two arguments: textarea, and label characters counter');
         }
 
         if (typeof smsTextarea === 'string' && typeof smsCounter === 'string') {
-                smsTextarea = document.getElementById(smsTextarea);
-                smsCounter = document.getElementById(smsCounter);
+            smsTextarea = document.getElementById(smsTextarea);
+            smsCounter = document.getElementById(smsCounter);
 
-                if (smsTextarea === null || smsCounter === null) {
-                    throw new Error('CVSMSCounter: passed ID names have no corresponding HTML nodes in current DOM tree.');
-                }
-
+            if (smsTextarea === null || smsCounter === null) {
+                throw new Error('CVSMSCounter: passed ID names have no corresponding HTML nodes in current DOM tree.');
+            }
         }
 
         countCharacters(smsTextarea, smsCounter);
         var eventsArray = ['keyup', 'change', 'paste'];
 
-        eventsArray.forEach(function(event) {
-            smsTextarea.addEventListener(event, function() {
+        eventsArray.forEach(function (event) {
+            smsTextarea.addEventListener(event, function () {
                 countCharacters(this, smsCounter)
             }, false);
         });
     }
 
     function countCharacters(textarea, counter) {
-
         var smsSettings = {},
             smsPartsCount,
             charactersLeft;
@@ -79,7 +76,7 @@ var CVSMSCounter = (function() {
         } else if (smsPartsCount === 2) {
             charactersLeft = smsSettings.secondSmsLength - (textareaLength - smsSettings.singleSmsLength);
         } else if (smsPartsCount > 2) {
-            charactersLeft = smsSettings.manySmsLength  - (textareaLength - smsSettings.manySmsLength  * (smsPartsCount - 1));
+            charactersLeft = smsSettings.manySmsLength - (textareaLength - smsSettings.manySmsLength * (smsPartsCount - 1));
         }
 
         counter.innerHTML = charactersLeft + '/' + smsPartsCount;
@@ -90,4 +87,3 @@ var CVSMSCounter = (function() {
     };
 
 })();
-
