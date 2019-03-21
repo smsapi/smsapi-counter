@@ -2,5 +2,8 @@
   "name": "smsapi-counter",
   "version": "1.0.0",
   "main": "smsapi-counter.min.js",
-  "repository": "https://github.com/smsapi/smsapi-counter.git"
+  "repository": "https://github.com/smsapi/smsapi-counter.git",
+  "devDependencies": {
+    "prettier": "^1.16.4"
+  }
 }
