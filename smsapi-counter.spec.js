@@ -66,4 +66,29 @@ describe('smsapi-counter', () => {
             }
         );
     });
+
+    describe('when unicode characters are used', () => {
+        it.each([
+            [10, 60, 1],
+            [70, 0, 1],
+            [71, 63, 2],
+            [134, 0, 2],
+            [135, 66, 3],
+            [201, 0, 3],
+        ])(
+            'message with %s characters should left %s character(s) and take %s part(s)',
+            (messageLength, expectedCharactersLeft, expectedParts) => {
+                // given
+                textarea.value = someUnicodeCharacter.repeat(messageLength);
+
+                // when
+                require('./smsapi-counter.js');
+
+                // then
+                expect(counter.innerHTML).toEqual(
+                    `${expectedCharactersLeft}/${expectedParts}`
+                );
+            }
+        );
+    });
 });
