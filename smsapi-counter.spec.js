@@ -49,5 +49,19 @@ describe('smsapi-counter', () => {
                 expect(counter.innerHTML).toEqual(`${expectedCharactersLeft}/${expectedParts}`);
             },
         );
+
+        it.each(['^', '{', '}', '[', ']', '~', '\\', '|', '€'])(
+            '%s extended character should be counted as two characters in message',
+            (extendedCharacter) => {
+                // given
+                textarea.value = extendedCharacter;
+
+                // when
+                require('./smsapi-counter.js');
+
+                // then
+                expect(counter.innerHTML).toEqual('158/1');
+            },
+        );
     });
 });
