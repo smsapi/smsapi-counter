@@ -72,7 +72,7 @@ var CVSMSCounter = (function() {
             smsSettings = {
                 symbolsMaxCount: 918,
                 singleSmsLength: 160,
-                secondSmsLength: 147,
+                secondSmsLength: 146,
                 manySmsLength: 153,
             };
         }
