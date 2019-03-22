@@ -3,7 +3,9 @@ var CVSMSCounter = (function() {
         dataCvSmsCounter = '[data-cv-sms-counter]',
         smsTextareasNodeList = document.querySelectorAll(dataCvSmsTextarea);
 
-    function isGsmCharacterSet(string) {
+    var extendedGsmCharacters = /([\^\[\]{}~|\\€])/g;
+
+    function hasUnicodeCharacters(string) {
         return /[^A-Z0-9_@£\$¥èéùìòÇØø\+%&\!"#'\(\)\*,\-\.ÅåÆæß¤:;<=>?¡ÄÖÑÜ§¿äöñüà€ΓΔΘΛΞΠΣΦΨΩαβγδεζηθικλμνξοπρστυφχψωςέάόίώύήϊϋΐΰΆΈΊΉΌΎΏXΥΡΟΝΜΚΗΖΕΙΤΑΧΒ\^\{\}\\\[~\]\|\/ \n\r]/gi.test(
             string
         );
@@ -55,19 +57,23 @@ var CVSMSCounter = (function() {
             smsPartsCount,
             charactersLeft;
 
-        if (!isGsmCharacterSet(textarea.value)) {
-            smsSettings = {
-                symbolsMaxCount: 918,
-                singleSmsLength: 160,
-                secondSmsLength: 147,
-                manySmsLength: 153,
-            };
-        } else {
+        const messageHasUnicodeCharacters = hasUnicodeCharacters(
+            textarea.value
+        );
+
+        if (messageHasUnicodeCharacters) {
             smsSettings = {
                 symbolsMaxCount: 402,
                 singleSmsLength: 70,
                 secondSmsLength: 64,
                 manySmsLength: 67,
+            };
+        } else {
+            smsSettings = {
+                symbolsMaxCount: 918,
+                singleSmsLength: 160,
+                secondSmsLength: 147,
+                manySmsLength: 153,
             };
         }
 
@@ -78,8 +84,10 @@ var CVSMSCounter = (function() {
             );
         }
 
-        var textareaValue = textarea.value,
-            textareaLength = textareaValue.length;
+        var textareaValue = messageHasUnicodeCharacters
+            ? textarea.value
+            : textarea.value.replace(extendedGsmCharacters, ' $1');
+        var textareaLength = textareaValue.length;
 
         smsPartsCount =
             textareaLength <= smsSettings.singleSmsLength
