@@ -3,6 +3,7 @@ env:
 extends:
     - eslint:recommended
     - plugin:prettier/recommended
+parser: babel-eslint
 rules:
     no-useless-escape: off
     no-unused-vars: off

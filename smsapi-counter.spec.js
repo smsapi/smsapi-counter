@@ -35,7 +35,7 @@ describe('smsapi-counter', () => {
             [161, 145, 2],
             [306, 0, 2],
             [307, 152, 3],
-            [459, 0, 3]
+            [459, 0, 3],
         ])(
             'message with %s characters should left %s character(s) and take %s part(s)',
             (messageLength, expectedCharactersLeft, expectedParts) => {
@@ -46,8 +46,10 @@ describe('smsapi-counter', () => {
                 require('./smsapi-counter.js');
 
                 // then
-                expect(counter.innerHTML).toEqual(`${expectedCharactersLeft}/${expectedParts}`);
-            },
+                expect(counter.innerHTML).toEqual(
+                    `${expectedCharactersLeft}/${expectedParts}`
+                );
+            }
         );
 
         it.each(['^', '{', '}', '[', ']', '~', '\\', '|', '€'])(
@@ -61,7 +63,7 @@ describe('smsapi-counter', () => {
 
                 // then
                 expect(counter.innerHTML).toEqual('158/1');
-            },
+            }
         );
     });
 });
