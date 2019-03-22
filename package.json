@@ -12,8 +12,8 @@
     "uglify-js": "^3.5.1"
   },
   "scripts": {
-    "test": "jest --notify",
-    "test:watch": "jest --notify --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "uglify": "uglifyjs --compress --mangle --output smsapi-counter.min.js -- smsapi-counter.js"
   }
 }

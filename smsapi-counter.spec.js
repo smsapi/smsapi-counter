@@ -3,7 +3,8 @@
 let counter;
 let textarea;
 
-const singleSmsLength = 160;
+const someGsmCharacter = 'a';
+const someUnicodeCharacter = 'Ж';
 
 describe('smsapi-counter', () => {
     beforeEach(() => {
@@ -28,18 +29,27 @@ describe('smsapi-counter', () => {
     });
 
     describe('when only gsm characters are used', () => {
-        it('should calculate single sms left characters', () => {
-            // given
-            const someGsmOnlyCharacters = '1234567890abcAbc';
+        describe.each([
+            [150, 10, 1],
+            [160, 0, 1],
+            [161, 145, 2],
+            [306, 0, 2],
+            [307, 152, 3],
+            [459, 0, 3]
+        ])(
+            'message with %s characters should left %s characters and take %s part(s)',
+            (messageLength, expectedCharactersLeft, expectedParts) => {
+                it(`returns ${expectedCharactersLeft}/${expectedParts}`, () => {
+                    // given
+                    textarea.value = someGsmCharacter.repeat(messageLength);
 
-            // when
-            textarea.value = someGsmOnlyCharacters;
-            require('./smsapi-counter.js');
+                    // when
+                    require('./smsapi-counter.js');
 
-            // then
-            expect(counter.innerHTML).toEqual(
-                `${singleSmsLength - someGsmOnlyCharacters.length}/1`
-            );
-        });
+                    // then
+                    expect(counter.innerHTML).toEqual(`${expectedCharactersLeft}/${expectedParts}`);
+                });
+            },
+        );
     });
 });
