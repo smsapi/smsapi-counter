@@ -57,9 +57,7 @@ var CVSMSCounter = (function() {
             smsPartsCount,
             charactersLeft;
 
-        const messageHasUnicodeCharacters = hasUnicodeCharacters(
-            textarea.value
-        );
+        var messageHasUnicodeCharacters = hasUnicodeCharacters(textarea.value);
 
         if (messageHasUnicodeCharacters) {
             smsSettings = {
