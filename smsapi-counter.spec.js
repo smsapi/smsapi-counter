@@ -29,7 +29,7 @@ describe('smsapi-counter', () => {
     });
 
     describe('when only gsm characters are used', () => {
-        describe.each([
+        it.each([
             [150, 10, 1],
             [160, 0, 1],
             [161, 145, 2],
@@ -37,18 +37,16 @@ describe('smsapi-counter', () => {
             [307, 152, 3],
             [459, 0, 3]
         ])(
-            'message with %s characters should left %s characters and take %s part(s)',
+            'message with %s characters should left %s character(s) and take %s part(s)',
             (messageLength, expectedCharactersLeft, expectedParts) => {
-                it(`returns ${expectedCharactersLeft}/${expectedParts}`, () => {
-                    // given
-                    textarea.value = someGsmCharacter.repeat(messageLength);
+                // given
+                textarea.value = someGsmCharacter.repeat(messageLength);
 
-                    // when
-                    require('./smsapi-counter.js');
+                // when
+                require('./smsapi-counter.js');
 
-                    // then
-                    expect(counter.innerHTML).toEqual(`${expectedCharactersLeft}/${expectedParts}`);
-                });
+                // then
+                expect(counter.innerHTML).toEqual(`${expectedCharactersLeft}/${expectedParts}`);
             },
         );
     });
